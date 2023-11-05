@@ -1,9 +1,9 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "shit",
-    LoadingTitle = "dsa Script Hub",
-    LoadingSubtitle = "I Shit my pants making this",
+    Name = "Realistic hood; enjoy",
+    LoadingTitle = "Poorly Made Productions Script Hub",
+    LoadingSubtitle = "I Shit my pants making this; Poorly Made Productions",
     ConfigurationSaving = {
        Enabled = true,
        FolderName = nil, -- Create a custom folder for your hub/game
@@ -34,11 +34,23 @@ local Window = Rayfield:CreateWindow({
     Increment = 1,
     Suffix = "Speed",
     CurrentValue = 10,
-    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "Slider1",
     Callback = function(Value)
- game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
     end,
- })
+})
+
+-- Function to update WalkSpeed based on the slider's value continuously
+local function updateWalkSpeed()
+    while true do
+        local sliderValue = walkSpeedSlider:GetValue()
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = sliderValue
+        wait(0.1) -- Adjust the delay as needed
+    end
+end
+
+-- Start the function in a new thread
+spawn(updateWalkSpeed)
 
 local Button = PlayerTab:CreateButton({
    Name = "Gun mods",
