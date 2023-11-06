@@ -26,7 +26,9 @@ local Window = Rayfield:CreateWindow({
     }
  })
 
- local PlayerTab = Window:CreateTab("everything as of now", 4483362458) -- Title, Image
+ local PlayerTab = Window:CreateTab("Player stuff like speed and jump", 4483362458) -- Title, Image
+ local GunTab = Window:CreateTab("Gun mods", 4483362458) -- Title, Image
+ local EspTab = Window:CreateTab("everything as of now", 4483362458) -- Title, Image
 
  local Slider = PlayerTab:CreateSlider({
     Name = "WalkSpeed",
@@ -52,7 +54,7 @@ end
 -- Start the function in a new thread
 spawn(updateWalkSpeed)
 
-local Button = PlayerTab:CreateButton({
+local Button = GunTab:CreateButton({
    Name = "Gun mods",
    Callback = function()
        while true do
@@ -95,7 +97,7 @@ end
 
 end,    
 })
-local Button = PlayerTab:CreateButton({
+local Button = EspTab:CreateButton({
    Name = "owlhub",
    Callback = function()
        loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))();
