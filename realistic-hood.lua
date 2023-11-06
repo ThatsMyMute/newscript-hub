@@ -97,15 +97,7 @@ end
 
 end,    
 })
-local Button = EspTab:CreateButton({
-   Name = "Esp its Gone as of now",
-   Callback = function()
-           game:GetService("StarterGui"):SetCore("SendNotification",{
-	Title = "esp is gone", -- Required
-	Text = "broke", -- Required
-	Icon = "rbxassetid://1234567890" -- Optional
-})
-})
+
 local Button = EspTab:CreateButton({
    Name = "Aimbot",
    Callback = function()
