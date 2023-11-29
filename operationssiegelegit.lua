@@ -1,10 +1,32 @@
+-- VERSION .5 FIXED TOGGLES FOR GADGETS AND DRONE CHAMS!
+
 --- a few things are fucked so please wait till version 2.0 for shit to really work
+local function addCham(object, tbl)
+  if not object:FindFirstChild("cham") then
+      local h = Instance.new("Highlight")
+      h.Name = "cham"
+      h.Parent = object
+      h.Adornee = object
+      h.Enabled = true
+      h.FillColor = tbl.color
+      h.FillTransparency = tbl.fTransparency
+      h.OutlineColor = tbl.color
+      h.OutlineTransparency = tbl.oTransparency
+  end
+end
+getgenv().gadget = true
+getgenv().dronechams = true
 getgenv().config = {
   chams = true,
   fixTeam = true, 
   transSoftWall = true,
-  transBarricade = true,-- not working rn im stupid so give me a second
+  transBarricade = true,
   bringEnemies = false, -- super buggy cant be undone once toggled?
+  dronechams = true,
+  waittime = 5, -- wait time for drone chams and object chams lower might be more glitchy
+  objectschams = true, -- if they stop highlighting its due to 30 limit reached
+  dronecolor = Color3.fromRGB(167, 71, 141), -- pink ish
+  objectcolor = Color3.fromRGB(18, 158, 0), -- green
   bombColor = Color3.fromHex("#ffac00"), -- orange
   teamColor = {
       attacker = Color3.fromHex("#ff0000"), -- red
@@ -25,7 +47,7 @@ local Window = Rayfield:CreateWindow({
   },
   Discord = {
      Enabled = true,
-     Invite = "pPDrwHqsfy", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+     Invite = "griffin", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
   },
   KeySystem = false, -- Set this to true to use our key system
@@ -125,31 +147,62 @@ local context = pgui.GameGui.TimerHUD.Contex.TextLabel
 local Breach = game.workspace["SE_Workspace"].Breach
 local Doors = game.workspace["SE_Workspace"].Doors
 
-
-
-local Toggle4 = Walls:CreateToggle({
-  Name = "View through barricades", -- credit to griffin
-  CurrentValue = false,
-  Flag = "Toggle4",
-  Callback = function(transBarricade)
-    -- Replace with the actual function
-    spawnLoop(config.transBarricade, function()
-      for _, door in ipairs(Doors:GetChildren()) do
-        for _, doorPart in ipairs(door:FindFirstChild("Door"):GetChildren()) do
-          if doorPart:IsA("Part") and doorPart.Transparency ~= 0.74955 then
-            doorPart.Transparency = 0.74955
-          end
-        end
-      end
-    end, function()
-      for _, door in ipairs(Doors:GetChildren()) do
-        for _, doorPart in ipairs(door:FindFirstChild("Door"):GetChildren()) do
-          if doorPart:IsA("Part") and doorPart.Transparency == 0.74955 then
-            doorPart.Transparency = 0
-          end
-        end
-      end
-    end)
-  end,
-})
+local Toggle = Esp:CreateToggle({
+  Name = "Drone CHAMS",
+  CurrentValue = true,
+  Flag = "Toggle5",
+  Callback = function(dronechams)
   
+
+  
+  while getgenv().dronechams do
+      for _, v in ipairs(game.workspace.SE_Workspace.Drones:GetChildren()) do
+          if not v:FindFirstChild("cham") then
+              addCham(v, {
+                  color = dronecolor,
+                  oTransparency = 0,
+                  fTransparency = 0.5
+              })
+          end
+      end
+      wait()
+  end
+  end
+  })
+  
+
+  local Toggle = Esp:CreateToggle({
+    Name = "Object Chams Made By ME ✅",
+    CurrentValue = true,
+    Flag = "Toggle6",
+    Callback = function(gadget)
+
+local function addCham(object, tbl)
+    if not object:FindFirstChild("cham") then
+        local h = Instance.new("Highlight")
+        h.Name = "cham"
+        h.Parent = object
+        h.Adornee = object
+        h.Enabled = true
+        h.FillColor = tbl.color
+        h.FillTransparency = tbl.fTransparency
+        h.OutlineColor = tbl.color
+        h.OutlineTransparency = tbl.oTransparency
+    end
+end
+
+while getgenv().gadget do
+    for _, v in ipairs(game.workspace.Gadgets:GetChildren()) do
+        if not v:FindFirstChild("cham") then
+            addCham(v, {
+                color = Color3.fromRGB(255, 0, 0),
+                oTransparency = 0,
+                fTransparency = 0.5
+            })
+        end
+    end
+    wait()
+end
+
+end
+  })
